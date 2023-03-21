@@ -2,7 +2,6 @@
 #include <iostream>
 #include "a3.h"
 
-
 using namespace std;
 
 //
@@ -14,24 +13,23 @@ using namespace std;
 //  the iteration function do_mandelbrot() is called. The number of iterations returned
 //  by this function is stored in the array 'counter[][]'.
 //
-void mandelbrot(int max_depth, double left, double bottom, 
-  	            double right, double top, int counter[][NCOL])
+void mandelbrot(int max_depth, double left, double bottom,
+                double right, double top, int counter[][NCOL])
 {
-   
-    //   #pragma omp parallel for collapse(2) schedule(static,1)
-     //   #pragma omp parallel for schedule(dynamic,1)
-    //   #pragma omp parallel for schedule(static,1) 
-    #pragma omp parallel for collapse(2) schedule(dynamic,1)
-    for (int nr = 0; nr < NROW; ++nr) {
-        for(int nc = 0; nc < NCOL; ++nc) {
+    // #pragma omp parallel for schedule(static,1)
+    // #pragma omp parallel for collapse(2) schedule(static,1)
+    // #pragma omp parallel for schedule(dynamic,1)
+    #pragma omp parallel for collapse(2) schedule(dynamic, 1)
+    for (int nr = 0; nr < NROW; ++nr)
+    {
+        for (int nc = 0; nc < NCOL; ++nc)
+        {
             // Calculate position in complex plane
-            complex<double> c((0.5+nr)*(right-left)/NCOL + left,
-                              (0.5+nc)*(top-bottom)/NROW + bottom);
-            
+            complex<double> c((0.5 + nr) * (right - left) / NCOL + left,
+                              (0.5 + nc) * (top - bottom) / NROW + bottom);
+
             // Iterate the mandelbrot sequence.
             counter[nr][nc] = do_mandelbrot(max_depth, c);
         }
     }
 }
-
-
