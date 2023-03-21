@@ -18,10 +18,6 @@ void mandelbrot(int max_depth, double left, double bottom,
   	            double right, double top, int counter[][NCOL])
 {
    
-    //   #pragma omp parallel for collapse(2) schedule(static,1)
-     //   #pragma omp parallel for schedule(dynamic,1)
-    //   #pragma omp parallel for schedule(static,1) 
-    #pragma omp parallel for collapse(2) schedule(dynamic,1)
     for (int nr = 0; nr < NROW; ++nr) {
         for(int nc = 0; nc < NCOL; ++nc) {
             // Calculate position in complex plane
